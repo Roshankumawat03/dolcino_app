@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Hero Section -->
+<section class="hero" id="home">
+    <div class="hero-content">
+        <h1 class="hero-title">Exquisite<br><span class="gradient-text">Recipes</span></h1>
+        <p class="hero-subtitle">Discover authentic culinary creations from world-class chefs</p>
+        <div class="hero-buttons">
+            <a href="#featured" class="cta-button primary">Explore Recipes</a>
+            <a href="#newsletter" class="cta-button secondary">Get Weekly Recipes</a>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Recipes -->
+<section id="featured" class="section featured">
+    <div class="container">
+        <h2 class="section-title">Featured Recipes</h2>
+        <div class="posts-grid">
+            {% for post in featured_posts %}
+            <article class="post-card" onclick="goToPost('{{ post.slug }}')">
+                <div class="post-image">
+                    <!-- ✅ Real Images with Fallback -->
+                    <img src="{{ url_for('static', filename='images/' + post.image) }}" 
+                         alt="{{ post.title }}" 
+                         onerror="this.parentElement.style.background='linear-gradient(135deg, var(--{{ post.category | lower }}), var(--{{ post.category | lower }}-light))'; this.style.display='none';">
+                    <div class="post-badge">{{ post.category }}</div>
+                </div>
+                <div class="post-content">
+                    <h3 class="post-title">{{ post.title }}</h3>
+                    <p class="post-excerpt">{{ post.excerpt }}</p>
+                    <div class="post-meta">
+                        <span><i class="fas fa-clock"></i> {{ post.prep_time }}</span>
+                        <span><i class="fas fa-users"></i> {{ post.servings }}</span>
+                        <span class="difficulty">{{ post.difficulty }}</span>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Recent Posts -->
+<section class="section recent-posts">
+    <div class="container">
+        <h2 class="section-title">Latest Creations</h2>
+        <div class="posts-grid small">
+            {% for post in recent_posts %}
+            <article class="post-card small-card" onclick="goToPost('{{ post.slug }}')">
+                <div class="post-image small-image">
+                    <img src="{{ url_for('static', filename='images/' + post.image) }}" 
+                         alt="{{ post.title }}" 
+                         onerror="this.parentElement.style.background='linear-gradient(135deg, var(--{{ post.category | lower }}), var(--{{ post.category | lower }}-light))'; this.style.display='none';">
+                </div>
+                <div class="post-content">
+                    <span class="post-category">{{ post.category }}</span>
+                    <h4 class="post-title small">{{ post.title }}</h4>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter -->
+<section id="newsletter" class="newsletter">
+    <div class="container">
+        <div class="newsletter-content">
+            <h2>Weekly Recipe Inspiration</h2>
+            <p>Join 10K+ food lovers getting exclusive recipes every week</p>
+            <form id="newsletterForm" class="newsletter-form">
+                <input type="email" id="email" placeholder="your@email.com" required>
+                <button type="submit">
+                    <i class="fas fa-paper-plane"></i> Subscribe
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

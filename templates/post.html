@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}{{ post.title }} | Dolcino{% endblock %}
+{% block content %}
+<main class="post-page">
+    <div class="container">
+        <article class="post-detail">
+            <!-- ✅ Real Image instead of gradient -->
+            <div class="post-hero-image">
+                <img src="{{ url_for('static', filename='images/' + post.image) }}" 
+                     alt="{{ post.title }}" 
+                     class="post-hero-img">
+                <div class="post-hero-overlay">
+                    <span class="category-badge large">{{ post.category }}</span>
+                </div>
+            </div>
+            
+            <header class="post-header">
+                <div class="post-meta-top">
+                    <span><i class="fas fa-clock"></i> {{ post.prep_time }}</span>
+                    <span><i class="fas fa-users"></i> {{ post.servings }}</span>
+                    <span class="difficulty large">{{ post.difficulty }}</span>
+                </div>
+                <h1 class="post-title-large">{{ post.title }}</h1>
+            </header>
+            
+            <div class="post-content">
+                {{ post.content | safe }}
+            </div>
+            
+            <div class="post-actions">
+                <a href="/" class="btn-back">
+                    <i class="fas fa-arrow-left"></i> All Recipes
+                </a>
+            </div>
+        </article>
+    </div>
+</main>
+{% endblock %}
